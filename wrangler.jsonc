@@ -1,0 +1,45 @@
+// Cloudflare Workers configuration. Docs: https://developers.cloudflare.com/workers/wrangler/configuration/
+// Everything here works on the Workers Free plan. Secrets are NOT set here: use `.dev.vars` locally
+// and `wrangler secret put NAME` in production (see docs/deploy.md).
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "starter-kit",
+  "main": "src/index.ts",
+  // Keep this at or below the newest date the test runtime supports (see docs/testing.md).
+  "compatibility_date": "2026-08-01",
+  // The kit uses only Web APIs. Add "compatibility_flags": ["nodejs_compat"] (and `npm i -D @types/node`)
+  // if you bring in a package that needs Node built-ins, such as the official Stripe SDK.
+  "workers_dev": true,
+  "observability": { "enabled": true },
+
+  // Static files (CSS, favicon). Served directly by Cloudflare before the Worker runs.
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+  },
+
+  // D1 database. Create yours with `wrangler d1 create starter-kit-db` and paste the id here.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "starter-kit-db",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations",
+    },
+  ],
+
+  // Daily housekeeping (expired sessions and links, old usage rows). Handled by `scheduled` in
+  // src/index.ts. Uncomment to enable; the free plan allows 5 cron triggers.
+  // "triggers": { "crons": ["17 3 * * *"] },
+
+  // Non-secret configuration. Override per environment under "env.<name>.vars" if you like.
+  "vars": {
+    "APP_NAME": "Starter Kit",
+    "APP_URL": "http://localhost:8787",
+    "APP_ENV": "development",
+    "EMAIL_FROM": "Starter Kit <onboarding@resend.dev>",
+    // Comma-separated list of emails that get the admin role on sign-in.
+    "ADMIN_EMAILS": "",
+  },
+}

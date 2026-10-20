@@ -1,0 +1,43 @@
+{
+  "name": "lathesmith-starter-kit-lite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lite edition: Cloudflare Workers + D1 + magic-link auth + tests + CI. MIT licensed.",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm run test && npm run format:check && npm run licenses:check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "cf-typegen": "wrangler types",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote",
+    "db:reset:local": "node scripts/reset-local-db.mjs",
+    "licenses:check": "node scripts/licenses.mjs --check",
+    "licenses:notices": "node scripts/licenses.mjs --write",
+    "postinstall": "wrangler types"
+  },
+  "dependencies": {
+    "hono": "^4.13.13",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.22.0",
+    "prettier": "^3.9.9",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.148.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "allowScripts": {
+    "esbuild": true,
+    "workerd": true
+  },
+  "license": "MIT"
+}

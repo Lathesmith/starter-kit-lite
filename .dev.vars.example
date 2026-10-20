@@ -1,0 +1,9 @@
+# Copy this file to `.dev.vars` (which is git-ignored) and fill in what you need.
+# `wrangler dev` reads `.dev.vars` as secrets. In production, set them with `wrangler secret put NAME`.
+# Non-secret settings (APP_URL, APP_NAME, ...) live under "vars" in wrangler.jsonc.
+
+# --- Email (optional in development) ---------------------------------------
+# Leave RESEND_API_KEY empty in development: emails are written to the local
+# outbox instead (open http://localhost:8787/dev/outbox to read magic links).
+RESEND_API_KEY=
+
